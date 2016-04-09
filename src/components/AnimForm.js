@@ -37,9 +37,17 @@ class AnimForm extends Component {
     }
   }
 
-  showPreviousButton() {
+  showNextButton(nextBtnText, finishBtnText) {
+    if (this.state.stepIndex === this.props.children.length - 1) {
+      return <button onClick={this.nextStep.bind(this)}>{finishBtnText}</button>;
+    } else {
+      return <button onClick={this.nextStep.bind(this)}>{nextBtnText}</button>;
+    }
+  }
+
+  showPreviousButton(prevBtnText, finishBtnText) {
     if (this.state.stepIndex > 0) {
-      return <button onClick={this.prevStep.bind(this)}>prev</button>;
+      return <button onClick={this.prevStep.bind(this)}>{prevBtnText}</button>;
     } else {
       return null;
     }
@@ -70,15 +78,16 @@ class AnimForm extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, nextBtnText, prevBtnText, finishBtnText } = this.props;
 
     return (
       <div className="AnimForm">
         {this.state.stepIndex}
           <Fader childElement={this.props.children[this.state.stepIndex]} style={this.state.style}>
           </Fader>
-        <button onClick={this.nextStep.bind(this)}>next</button>
-        {this.showPreviousButton()}
+
+        {this.showNextButton(nextBtnText, finishBtnText)}
+        {this.showPreviousButton(prevBtnText)}
       </div>
     )
   }

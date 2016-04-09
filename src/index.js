@@ -11,7 +11,7 @@ class ReactAnimatedForms extends Component {
   render() {
     return (
       <div className="ReactAnimatedForms">
-        <AnimForm>
+        <AnimForm nextBtnText="Next" prevBtnText="Previous" finishBtnText="Save">
           <div>hi</div>
           <div>by</div>
           <div>foo</div>
