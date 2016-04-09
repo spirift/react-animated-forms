@@ -10,7 +10,7 @@ Animated forms in react. Each step in a form can be animated in.
   finishBtnText="Save"
   type="fadeIn"
 >
-  <Your form here />
+  <Your inputs, labels, etc. go here />
 </AnimForm>
 ```
 
