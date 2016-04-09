@@ -15,10 +15,11 @@ class Animator extends Component {
   }
 
   render() {
-    const { childElement, children, animStyles, containerSlideDownStyle } = this.props;
+    const { step, stepText = [], childElement, children, animStyles, containerSlideDownStyle } = this.props;
 
     return (
       <div className="Animator">
+        {stepText[step]}
         <div style={containerSlideDownStyle}>
           <div style={animStyles}>
             {childElement}

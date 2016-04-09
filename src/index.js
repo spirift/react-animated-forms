@@ -11,7 +11,8 @@ class ReactAnimatedForms extends Component {
   render() {
     return (
       <div className="ReactAnimatedForms">
-        <AnimForm nextBtnText="Next" prevBtnText="Previous" finishBtnText="Save" type="fadeIn">
+        <AnimForm nextBtnText="Next" prevBtnText="Previous" finishBtnText="Save"
+          type="fadeIn" stepText={['email', 'password', 'confirm']}>
           <div>
             <label>Email</label>
             <input type="email" placeholder="me@me.com" />
@@ -27,7 +28,8 @@ class ReactAnimatedForms extends Component {
 
 
 
-        <AnimForm nextBtnText="Next" prevBtnText="Previous" finishBtnText="Save" type="slideDown">
+        <AnimForm nextBtnText="Next" prevBtnText="Previous" finishBtnText="Save"
+          type="slideDown" stepText={['email', 'password', 'confirm']}>
           <div>
             <label>Email</label>
             <input type="email" placeholder="me@me.com" />

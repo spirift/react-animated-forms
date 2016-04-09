@@ -120,12 +120,14 @@ class AnimForm extends Component {
   }
 
   render() {
-    const { children, nextBtnText, prevBtnText, finishBtnText, type } = this.props;
+    const { children, nextBtnText, prevBtnText, finishBtnText, type, stepText } = this.props;
 
     return (
       <form className="AnimForm">
-        Step {this.state.stepIndex}
+
         <Animator
+          step={this.state.stepIndex}
+          stepText={stepText}
           childElement={this.props.children[this.state.stepIndex]}
           fadeIn={this.fadeIn}
           slideDown={this.slideDown}
