@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-class Start extends Component {
+import AnimForm from './components/AnimForm';
+
+class ReactAnimatedForms extends Component {
   constructor(props) {
     super(props)
   }
 
   render() {
-    return <div>Start</div>
+    return (
+      <div className="ReactAnimatedForms">
+        <AnimForm>
+          <div>hi</div>
+          <div>by</div>
+          <div>foo</div>
+        </AnimForm>
+      </div>
+    )
   }
 };
 
-ReactDOM.render(<Start />, document.getElementById('react-dom-hook'))
+ReactDOM.render(<ReactAnimatedForms />, document.getElementById('react-dom-hook'))
