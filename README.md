@@ -3,14 +3,16 @@ Animated forms in react. Each step in a form can be animated in.
 
 # Usage
 
-```<AnimForm
+```
+<AnimForm
   nextBtnText="Next"
   prevBtnText="Previous"
   finishBtnText="Save"
   type="fadeIn"
 >
   <Your form here />
-</AnimForm>```
+</AnimForm>
+```
 
 Props
 -----
