@@ -11,10 +11,34 @@ class ReactAnimatedForms extends Component {
   render() {
     return (
       <div className="ReactAnimatedForms">
-        <AnimForm nextBtnText="Next" prevBtnText="Previous" finishBtnText="Save">
-          <div>hi</div>
-          <div>by</div>
-          <div>foo</div>
+        <AnimForm nextBtnText="Next" prevBtnText="Previous" finishBtnText="Save" type="fadeIn">
+          <div>
+            <label>Email</label>
+            <input type="email" placeholder="me@me.com" />
+          </div>
+          <div>
+              <label>Password</label>
+              <input type="password" placeholder="" />
+          </div>
+          <div>
+            Is that correct?
+          </div>
+        </AnimForm>
+
+
+
+        <AnimForm nextBtnText="Next" prevBtnText="Previous" finishBtnText="Save" type="slideDown">
+          <div>
+            <label>Email</label>
+            <input type="email" placeholder="me@me.com" />
+          </div>
+          <div>
+              <label>Password</label>
+              <input type="password" placeholder="" />
+          </div>
+          <div>
+            Is that correct?
+          </div>
         </AnimForm>
       </div>
     )

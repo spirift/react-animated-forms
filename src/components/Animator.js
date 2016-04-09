@@ -15,12 +15,14 @@ class Animator extends Component {
   }
 
   render() {
-    const { childElement, children, style } = this.props;
+    const { childElement, children, animStyles, containerSlideDownStyle } = this.props;
 
     return (
       <div className="Animator">
-        <div style={style}>
-          {childElement}
+        <div style={containerSlideDownStyle}>
+          <div style={animStyles}>
+            {childElement}
+          </div>
         </div>
         {children}
       </div>

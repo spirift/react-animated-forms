@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 
-import Fader from './Fader';
+import Animator from './Animator';
 
 class AnimForm extends Component {
   constructor(props) {
@@ -8,32 +9,35 @@ class AnimForm extends Component {
 
     this.state = {
       stepIndex: 0,
-      style: {
-        opacity: 0
+      styles: {
+        fadeIn: {
+          opacity: 0,
+        },
+        slideDown: {
+          height: 0,
+          overflow: 'hidden'
+        }
       }
     }
   }
 
-  static PropTypes = {
-    children: PropTypes.node
-  }
-
-  nextStep() {
+  nextStep(e) {
+    e.preventDefault();
     const limit = this.props.children.length - 1;
     if (this.state.stepIndex < limit) {
-      this.setState({ style: { opacity: 0 } });
+
       const nextStep = this.state.stepIndex + 1;
       this.setState({ stepIndex: nextStep });
-      this.fadeIn(0);
+      this[this.props.type](0);
     }
   }
 
-  prevStep() {
+  prevStep(e) {
+    e.preventDefault();
     if (this.state.stepIndex > 0) {
-      this.setState({ style: { opacity: 0 } });
       const prevStep = this.state.stepIndex - 1;
       this.setState({ stepIndex: prevStep });
-      this.fadeIn(0);
+      this[this.props.type](0);
     }
   }
 
@@ -57,8 +61,10 @@ class AnimForm extends Component {
     if (opacity <= 1) {
       const newOpactity = opacity + 0.05;
       this.setState({
-        style: {
-          opacity: newOpactity
+        styles: {
+          fadeIn: {
+            opacity: newOpactity
+          }
         }
       });
       setTimeout(() => {
@@ -66,30 +72,72 @@ class AnimForm extends Component {
       }, 15); // 15 is a 300ms fade in from 0 to 1 opacity
     } else {
       this.setState({
-        style: {
-          opacity: 1
+        styles: {
+          fadeIn: {
+            opacity: 1
+          }
         }
       });
     }
   }
 
+  slideDown = (height = 0, amount = 100) => {
+    if (height <= amount) {
+      const newHeight = height + 5;
+      this.setState({
+        styles: {
+          slideDown: {
+            height: `${newHeight}%`,
+            overflow: 'hidden'
+          }
+        }
+      });
+      setTimeout(() => {
+        this.slideDown(newHeight);
+      }, 15); // 15 is a 300ms fade in from 0 to 1 opacity
+    } else {
+      this.setState({
+        styles: {
+          slideDown: {
+            height: `100%`,
+            overflow: 'hidden'
+          }
+        }
+      });
+    }
+  }
+
+  static PropTypes = {
+    children: PropTypes.node
+  }
+
   componentDidMount() {
-    this.fadeIn(0);
+    this.setState({
+      containerSlideDownStyle: {
+        height: ReactDOM.findDOMNode(this).offsetHeight
+      }
+    });
   }
 
   render() {
-    const { children, nextBtnText, prevBtnText, finishBtnText } = this.props;
+    const { children, nextBtnText, prevBtnText, finishBtnText, type } = this.props;
 
     return (
-      <div className="AnimForm">
-        {this.state.stepIndex}
-          <Fader childElement={this.props.children[this.state.stepIndex]} style={this.state.style}>
-          </Fader>
+      <form className="AnimForm">
+        Step {this.state.stepIndex}
+        <Animator
+          childElement={this.props.children[this.state.stepIndex]}
+          fadeIn={this.fadeIn}
+          slideDown={this.slideDown}
+          animStyles={this.state.styles[type]}
+          containerSlideDownStyle={type === 'slideDown' ? this.state.containerSlideDownStyle : {}}
+        >
 
-        {this.showNextButton(nextBtnText, finishBtnText)}
-        {this.showPreviousButton(prevBtnText)}
-      </div>
-    )
+          {this.showNextButton(nextBtnText, finishBtnText)}
+          {this.showPreviousButton(prevBtnText)}
+        </Animator>
+      </form>
+    );
   }
 };
 
