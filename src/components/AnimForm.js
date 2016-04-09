@@ -25,10 +25,8 @@ class AnimForm extends Component {
     e.preventDefault();
     const limit = this.props.children.length - 1;
     if (this.state.stepIndex < limit) {
-
       const nextStep = this.state.stepIndex + 1;
-      this.setState({ stepIndex: nextStep });
-      this[this.props.type](0);
+      this[this.props.type](nextStep);
     }
   }
 
@@ -36,8 +34,7 @@ class AnimForm extends Component {
     e.preventDefault();
     if (this.state.stepIndex > 0) {
       const prevStep = this.state.stepIndex - 1;
-      this.setState({ stepIndex: prevStep });
-      this[this.props.type](0);
+      this[this.props.type](prevStep);
     }
   }
 
@@ -57,7 +54,31 @@ class AnimForm extends Component {
     }
   }
 
-  fadeIn = (opacity = 0) => {
+  fadeIn(newStep) {
+    this._fadeOut(1);
+    setTimeout(() => {
+      this.setState({ stepIndex: newStep });
+      this._fadeIn(0);
+    }, 400); // 300 for the fade out and 100 extra for cleaner animation
+  }
+
+  _fadeOut = (opacity = 1) => {
+    if (opacity >= 0) {
+      const newOpactity = opacity - 0.05;
+      this.setState({
+        styles: {
+          fadeIn: {
+            opacity: newOpactity
+          }
+        }
+      });
+      setTimeout(() => {
+        this._fadeOut(newOpactity);
+      }, 15); // 15 is a 300ms fade in from 0 to 1 opacity
+    }
+  }
+
+  _fadeIn = (opacity = 0) => {
     if (opacity <= 1) {
       const newOpactity = opacity + 0.05;
       this.setState({
@@ -68,7 +89,7 @@ class AnimForm extends Component {
         }
       });
       setTimeout(() => {
-        this.fadeIn(newOpactity);
+        this._fadeIn(newOpactity);
       }, 15); // 15 is a 300ms fade in from 0 to 1 opacity
     } else {
       this.setState({
@@ -81,8 +102,16 @@ class AnimForm extends Component {
     }
   }
 
-  slideDown = (height = 0, amount = 100) => {
-    if (height <= amount) {
+  slideDown(newStep) {
+    this._slideUp(100);
+    setTimeout(() => {
+      this.setState({ stepIndex: newStep });
+      this._slideDown(0);
+    }, 850); // 300 for the fade out and 100 extra for cleaner animation
+  }
+
+  _slideDown = (height = 0) => {
+    if (height <= 100) {
       const newHeight = height + 5;
       this.setState({
         styles: {
@@ -93,13 +122,39 @@ class AnimForm extends Component {
         }
       });
       setTimeout(() => {
-        this.slideDown(newHeight);
-      }, 15); // 15 is a 300ms fade in from 0 to 1 opacity
+        this._slideDown(newHeight);
+      }, 20); // 20 is a 400ms fade in from 0 to 1 opacity
     } else {
       this.setState({
         styles: {
           slideDown: {
             height: `100%`,
+            overflow: 'hidden'
+          }
+        }
+      });
+    }
+  }
+
+  _slideUp = (height = 100) => {
+    if (height >= 0) {
+      const newHeight = height - 5;
+      this.setState({
+        styles: {
+          slideDown: {
+            height: `${newHeight}%`,
+            overflow: 'hidden'
+          }
+        }
+      });
+      setTimeout(() => {
+        this._slideUp(newHeight);
+      }, 20); // 20 is a 400ms fade in from 0 to 1 opacity
+    } else {
+      this.setState({
+        styles: {
+          slideDown: {
+            height: `0%`,
             overflow: 'hidden'
           }
         }
@@ -126,11 +181,11 @@ class AnimForm extends Component {
       <form className="AnimForm">
 
         <Animator
-          step={this.state.stepIndex}
+          stepIndex={this.state.stepIndex}
           stepText={stepText}
           childElement={this.props.children[this.state.stepIndex]}
-          fadeIn={this.fadeIn}
-          slideDown={this.slideDown}
+          fadeIn={this._fadeIn}
+          slideDown={this._slideDown}
           animStyles={this.state.styles[type]}
           containerSlideDownStyle={type === 'slideDown' ? this.state.containerSlideDownStyle : {}}
         >
