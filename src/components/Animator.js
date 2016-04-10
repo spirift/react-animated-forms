@@ -26,7 +26,8 @@ class Animator extends Component {
   }
 
   render() {
-    const { stepIndex, stepText = [], childElement, children, animStyles, containerSlideDownStyle } = this.props;
+    const { stepIndex, stepText = [], childElement, children, animStyles,
+      containerSlideDownStyle, traverseAllChildren } = this.props;
 
     return (
       <div className="Animator">

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import cloneWithProps from 'react-clonewithprops';
 
 import Animator from './Animator';
 
@@ -38,9 +39,14 @@ class AnimForm extends Component {
     }
   }
 
+  finalStep(e) {
+    e.preventDefault();
+    this.props.onSubmit(e);
+  }
+
   showNextButton(nextBtnText, finishBtnText) {
     if (this.state.stepIndex === this.props.children.length - 1) {
-      return <button onClick={this.nextStep.bind(this)}>{finishBtnText}</button>;
+      return <button onClick={this.finalStep.bind(this)}>{finishBtnText}</button>;
     } else {
       return <button onClick={this.nextStep.bind(this)}>{nextBtnText}</button>;
     }
@@ -175,11 +181,11 @@ class AnimForm extends Component {
   }
 
   render() {
-    const { children, nextBtnText, prevBtnText, finishBtnText, type, stepText } = this.props;
+    const { children, nextBtnText, prevBtnText, finishBtnText, type, stepText,
+      onSubmit } = this.props;
 
     return (
-      <form className="AnimForm">
-
+      <form className="AnimForm" onSubmit={onSubmit}>
         <Animator
           stepIndex={this.state.stepIndex}
           stepText={stepText}
