@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 import AnimForm from './components/AnimForm';
-import { animFormChangeHandler } from './utils';
+
+window.AF = {}
 
 class ReactAnimatedForms extends Component {
   constructor(props) {
     super(props)
+  }
+
+  animFormChangeHandler = (e) => {
+    // TODO This should store the data with redux, not in a global object.
+    window.AF[e.target.name] = e.target.value;
   }
 
   submitHandler(e) {
@@ -24,11 +30,11 @@ class ReactAnimatedForms extends Component {
           onSubmit={this.submitHandler}>
           <div key={1}>
             <label>Email</label>
-            <input type="email" placeholder="me@me.com" name="email" onChange={animFormChangeHandler} />
+            <input type="email" placeholder="me@me.com" name="email" onChange={this.animFormChangeHandler} />
           </div>
           <div key={2}>
               <label>Password</label>
-              <input type="password" placeholder="" name="password" onChange={animFormChangeHandler} />
+              <input type="password" placeholder="" name="password" onChange={this.animFormChangeHandler} />
           </div>
           <div key={3}>
             Is that correct?
