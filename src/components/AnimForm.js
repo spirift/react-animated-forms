@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import cloneWithProps from 'react-clonewithprops';
 
 import Animator from './Animator';
 
