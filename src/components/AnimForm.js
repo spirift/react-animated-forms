@@ -168,7 +168,13 @@ class AnimForm extends Component {
   }
 
   static PropTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
+    nextBtnText: PropTypes.string,
+    prevBtnText: PropTypes.string,
+    finishBtnText: PropTypes.string,
+    type: PropTypes.string,
+    stepText: PropTypes.string,
+    onSubmit: PropTypes.func,
   }
 
   componentDidMount() {
